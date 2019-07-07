@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require("request");
+const schedule = require('node-schedule');
+
+
 // Creates express app
 const app = express();
 // The port used for Express server
@@ -57,6 +60,11 @@ const sendMergeRequestsToSlack = (mergeRequests) => {
   });
 };
 
+const getAndSendMergeRequests = async () => {
+  const mergeRequests = await getReadyMergeRequests();
+  sendMergeRequestsToSlack(mergeRequests);
+};
+
 
 
 
@@ -70,10 +78,15 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   res.send('Hello World!')
 });
-app.post('/', async (req, res) => {
+app.post('/', (req, res) => {
   console.log('YOU POSTED TO ME ?');
-  const mergeRequests = await getReadyMergeRequests();
-  // console.log(mergeRequests);
-  sendMergeRequestsToSlack(mergeRequests);
+  getAndSendMergeRequests();
+
 });
+
+const job = schedule.scheduleJob('45 9 * * 1-5', () => {
+  console.log('Job has ticked !');
+  getAndSendMergeRequests();
+});
+
 
