@@ -5,7 +5,7 @@ const request = require("request");
 // Creates express app
 const app = express();
 // The port used for Express server
-const PORT = 8080;
+const PORT = process.env.PORT || 3002;
 
 const GITLAB_BASE_URL = process.env.GITLAB_HOST;
 const GITLAB_TOKEN = process.env.GITLAB_TOKEN;
