@@ -81,7 +81,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   console.log('YOU POSTED TO ME ?');
   getAndSendMergeRequests();
-
+  res.sendStatus(204);
 });
 
 const job = schedule.scheduleJob('45 9 * * 1-5', () => {
