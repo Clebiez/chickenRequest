@@ -44,7 +44,7 @@ const getReadyMergeRequests = () => {
 };
 
 const sendMergeRequestsToSlack = (mergeRequests) => {
-  let message = `\n\n🐔 Coââââât, @channel You have *${mergeRequests.length} pull requests* to review !\n\n`;
+  let message = `\n\n🐔 Coââââât, <!channel> You have *${mergeRequests.length} pull requests* to review !\n\n`;
   mergeRequests.forEach(mr => {
     message += `\n- *${mr.title}* (${daysBetween(new Date().toISOString(), mr.created_at)} days old) : ${mr.web_url}\n`;
   });
